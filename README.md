@@ -366,13 +366,21 @@ class Net(nn.Module):
 
 As we can see, we have inserted 4 new parameters:
 
-- sim_file (str): This is the path to the configuration file of STONNE. This file defines the hardware to be simulated in every execution of STONNE. You can see multiple examples in the folder 'simulation_files'.
+* `sim_file (str)`
 
-- tile (str): This is the path to a file that defines the tile to be used to partition that layer. An example of this file might be found in 'minibenchmarks/dogsandcats_tile.txt' (Note that an example for a linear tile file might be found in 'minibenchmarks/dogsandcats_tile_fc.txt'). This parameter only will make sense if the hardware configuration file contains a dense memory controller. If the memory controller is sparse, then the execution will not require tiling as it is explained in SIGMA paper.
+    This is the path to the configuration file of STONNE. This file defines the hardware to be simulated in every execution of STONNE. You can see multiple examples in the folder 'simulation_files'.
 
-- sparsity_ratio (float 0.0-1.0): This is the sparsity ratio used to prune the weight tensor. This parameter only makes sense if a sparsity controller is used in the hardware configuration file. Otherwise this will be ignored.  They way to proceed in the current version of STONNE is indicating this parameter. Then, previously to the simulation, the weight tensor is pruned accordingly to that parameter and the bitmaps are created accordingly. Note that the weights are not retrained and therefore this will affect to the accuracy of the model. However, in terms of a simulation perspective, this lower accuracy is not affected at all. Obviously, this is a way to proceed. It is possible, with low efforts, to run an already pruned and re-trained model. To do so, the code have to be briefly modified to remove the pruning functions and use the real values as they are. By the moment, STONNE only allows bitmap representation of sparsity. If you have a model with other compression format, you could either code your own memory controller to support it or code a simple function to turn your representation format into a bitmap representation. 
+* `tile (str)`
 
-- stats_path: This is an optional parameter and points to a folder in which the stats of the simulation of that layer will be stored. 
+    This is the path to a file that defines the tile to be used to partition that layer. An example of this file might be found in 'minibenchmarks/dogsandcats_tile.txt' (Note that an example for a linear tile file might be found in 'minibenchmarks/dogsandcats_tile_fc.txt'). This parameter only will make sense if the hardware configuration file contains a dense memory controller. If the memory controller is sparse, then the execution will not require tiling as it is explained in SIGMA paper.
+
+* `sparsity_ratio (float 0.0-1.0)`
+
+    This is the sparsity ratio used to prune the weight tensor. This parameter only makes sense if a sparsity controller is used in the hardware configuration file. Otherwise this will be ignored.  They way to proceed in the current version of STONNE is indicating this parameter. Then, previously to the simulation, the weight tensor is pruned accordingly to that parameter and the bitmaps are created accordingly. Note that the weights are not retrained and therefore this will affect to the accuracy of the model. However, in terms of a simulation perspective, this lower accuracy is not affected at all. Obviously, this is a way to proceed. It is possible, with low efforts, to run an already pruned and re-trained model. To do so, the code have to be briefly modified to remove the pruning functions and use the real values as they are. By the moment, STONNE only allows bitmap representation of sparsity. If you have a model with other compression format, you could either code your own memory controller to support it or code a simple function to turn your representation format into a bitmap representation. 
+
+* `stats_path`
+
+    This is an optional parameter and points to a folder in which the stats of the simulation of that layer will be stored. 
 
 
 The addition of these 4 parameters and the modification of the function will let pytorch  run the layer in STONNE obtaining the real tensors.
