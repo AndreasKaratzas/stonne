@@ -270,7 +270,7 @@ Example of running a dense GEMM over TPU:
 ./stonne -DenseGEMM -M=4 -N=4 -K=16 -ms_rows=4 -ms_cols=4 -dn_bw=8 -rn_bw=16  -T_N=4 -T_M=1 -T_K=1 -accumulation_buffer=1 -rn_type="TEMPORALRN" -mn_type="OS_MESH" -mem_ctrl="TPU_OS_DENSE"
 ```
 
-**OUTPUT** 
+**Output** 
 
 Every layer execution generates 2 files in the path in which the simulator has been executed (the env variable OUTPUT_DIR can be set to indicate another output path): 
 
@@ -329,7 +329,7 @@ python setup.py install
 
 Please, follow the official instructions for each dependency if something occurs. 
 
-**RUNNING PYTORCH IN STONNE**
+**Running PyTorch in STONNE**
 
 Running pytorch using STONNE as a device is almost straightforward.
 Let's assume we define a DNN model using pytorch. This model is composed of a single and simple convolutional layer. Next, we present this code:
